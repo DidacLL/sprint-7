@@ -1,34 +1,32 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
+import {CheckInput} from "./CheckInput";
 
-const ItemOption = (name: String, value:number) => {
-	return
-};
-
-export function Form()  {
+export function Form() {
 	const [amount, setAmount] = useState(0);
 
-	const [isChecked, setIsChecked] = useState(false);
-
-	const handleOnChange = () => {
-		setIsChecked(!isChecked);
-	};
-
 	const handleSubmit = () => {
-
+		//todo
 	};
+
+	const updateAmount = (value: number) => {
+		setAmount(amount+value);
+	};
+
 	return (
-		<form onSubmit={handleSubmit}>
-			<label>Enter your name:
-				<input
-					type="checkbox"
-					id="topping"
-					name="topping"
-					value="Paneer"
-					checked={isChecked}
-					onChange={handleOnChange}
-				/>
+		<form onSubmit={handleSubmit}
+			  style={{
+				  textAlign: "left",
+				  padding: "5em"
+			  }}>
+			<label>
+				¿Qué quieres hacer?:
 			</label>
-			<input type="submit" />
+			<ul>
+				<CheckInput name={"Una pàgina web (500€)"} amount={amount} cost={500} updateAmount={updateAmount}/>
+				<CheckInput name={"Una consultoria SEO (300€)"} amount={amount} cost={300} updateAmount={updateAmount}/>
+				<CheckInput name={"Una campanya de Google Ads (200€)"} amount={amount} cost={200} updateAmount={updateAmount}/>
+			</ul>
+			<label>Preu: ${amount}€</label>
 		</form>
-	)
+	);
 }
