@@ -1,19 +1,29 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import {CheckInput} from "./CheckInput";
+import {ITService} from "./ITService";
 
-export function Form() {
-	const [amount, setAmount] = useState(0);
+interface FormParams {
+	 servicesList:ITService[];
+}
 
-	const handleSubmit = () => {
-		//todo
-	};
+export const Form = (props:FormParams) => {
+	const [prices,setPrices]=useState([0,0,0])
+	const [totalAmount,setTotalAmount]=useState(0)
+	useEffect(() => {
+		setTotalAmount(prices.reduce((a, b) => a + b))
+	}, [prices, totalAmount]);
 
-	const updateAmount = (value: number) => {
-		setAmount(amount+value);
+
+	const updateAmount = (value: number, index:number) => {
+		console.log("updating amounts...")
+		let newArr = [...prices];
+		newArr[index] =value;
+		console.log(newArr)
+		setPrices(newArr)
 	};
 
 	return (
-		<form onSubmit={handleSubmit}
+		<form
 			  style={{
 				  textAlign: "left",
 				  padding: "5em"
@@ -22,11 +32,12 @@ export function Form() {
 				¿Qué quieres hacer?:
 			</label>
 			<ul>
-				<CheckInput name={"Una pàgina web (500€)"} amount={amount} cost={500} updateAmount={updateAmount}/>
-				<CheckInput name={"Una consultoria SEO (300€)"} amount={amount} cost={300} updateAmount={updateAmount}/>
-				<CheckInput name={"Una campanya de Google Ads (200€)"} amount={amount} cost={200} updateAmount={updateAmount}/>
+				{props.servicesList.map((el:ITService,index:number)=>{
+					console.log("created: " +el.name +"at "+index)
+					return <CheckInput service={el} updateAmount={updateAmount} index={index}/>
+				})}
 			</ul>
-			<label>Preu: ${amount}€</label>
+			<label>Preu: ${totalAmount}€</label>
 		</form>
 	);
-}
+};

@@ -1,6 +1,7 @@
+import {ITService} from "../forms/ITService";
+
 export interface CheckInputProps {
-    name: String;
-    cost: number;
-    amount: number;
-    updateAmount: (newAmount: number) => void;
+    service:ITService;
+    updateAmount: (value: number,index:number) => void;
+    index:number;
 }
