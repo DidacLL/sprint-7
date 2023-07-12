@@ -47,6 +47,7 @@ export const CheckInput = (props: CheckInputProps) => {
                 onChange={handleOnChange}/>
             <label>{service.current.text}</label>
         </StyledList>
+        
         {isChecked && service.current instanceof WEBService ? <div style={{
             border: "4px solid black",
             maxWidth:"fit-content",
@@ -55,8 +56,8 @@ export const CheckInput = (props: CheckInputProps) => {
             display: "flex",
             flexDirection: "column"
         }}>
-            <NumberInput text={"Número de páginas: "} onChange={addPages}/>
-            <NumberInput text={"Número de idiomas: "} onChange={addLanguages}/>
+            <NumberInput text={"Número de páginas: "} onChange={addPages} minVal={1}/>
+            <NumberInput text={"Número de idiomas: "} onChange={addLanguages} minVal={1}/>
 
         </div> : ""}
     </>;

@@ -15,12 +15,12 @@ export const NumberInput = (props: NumberInputProps) => {
     //----------------------------------------------------------------------------------------------------------HANDLERS
     const handleClick=(e: React.MouseEvent<HTMLButtonElement>)=>{
         e.preventDefault()
-        setShowVal(e.currentTarget.name==="add"? Math.max(showVal+1,1):Math.max(showVal-1,1));
+        setShowVal(e.currentTarget.name==="add"? Math.max(showVal+1,props.minVal):Math.max(showVal-1,props.minVal));
     }
 
     const handleChange=(e: React.ChangeEvent<HTMLInputElement>) =>{
         e.preventDefault()
-        setShowVal(Math.max(parseInt(e.target.value),1))
+        setShowVal(Math.max(parseInt(e.target.value),props.minVal))
     }
 
 
