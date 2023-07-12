@@ -1,8 +1,9 @@
 import React from 'react';
 import './App.css';
 import {Form} from "./components/forms/Form";
-import {ITService} from "./components/forms/ITService";
-import {WEBService} from "./components/forms/WEBService";
+import {ITService} from "./components/classes/ITService";
+import {WEBService} from "./components/classes/WEBService";
+
 const inputValues = [
     new WEBService("WEB",500,"Una pàgina web (500€)",1,1),
     new ITService("SEO",300,"Una consultoria SEO (300€)"),

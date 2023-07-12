@@ -1,4 +1,5 @@
 import {ITService} from "./ITService";
+
 export class WEBService extends ITService {
     pages: number;
     lang: number;

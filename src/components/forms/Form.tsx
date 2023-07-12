@@ -1,29 +1,27 @@
 import React, {useEffect, useState} from "react";
 import {CheckInput} from "./CheckInput";
-import {ITService} from "./ITService";
+import {ITService} from "../classes/ITService";
 
 interface FormParams {
 	 servicesList:ITService[];
 }
 
 export const Form = (props:FormParams) => {
+	//-------------------------------------------------------------------------------------------------------STATE HOOKS
 	const [prices,setPrices]=useState([0,0,0])
 	const [totalAmount,setTotalAmount]=useState(0)
+	//------------------------------------------------------------------------------------------------------EFFECT HOOKS
 	useEffect(() => {
 		setTotalAmount(prices.reduce((a, b) => a + b))
-	}, [prices, totalAmount]);
-
-
+	}, [prices]);
+	//----------------------------------------------------------------------------------------------------------HANDLERS
 	const updateAmount = (value: number, index:number) => {
-		console.log("updating amounts...")
 		let newArr = [...prices];
 		newArr[index] =value;
-		console.log(newArr)
 		setPrices(newArr)
 	};
-
-	return (
-		<form
+	//----------------------------------------------------------------------------------------------------RETURN DISPLAY
+	return <form
 			  style={{
 				  textAlign: "left",
 				  padding: "5em"
@@ -33,11 +31,9 @@ export const Form = (props:FormParams) => {
 			</label>
 			<ul>
 				{props.servicesList.map((el:ITService,index:number)=>{
-					console.log("created: " +el.name +"at "+index)
 					return <CheckInput service={el} updateAmount={updateAmount} index={index}/>
 				})}
 			</ul>
 			<label>Preu: ${totalAmount}€</label>
-		</form>
-	);
+		</form>;
 };

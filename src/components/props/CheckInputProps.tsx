@@ -1,4 +1,4 @@
-import {ITService} from "../forms/ITService";
+import {ITService} from "../classes/ITService";
 
 export interface CheckInputProps {
     service:ITService;
