@@ -7,13 +7,18 @@ import {WEBService} from "../classes/WEBService";
 
 export const CheckInput = (props: CheckInputProps) => {
     //-------------------------------------------------------------------------------------------------------STATE HOOKS
-    const [isChecked, setIsChecked] = useState(false);
-    const [pages, setPages] = useState(0);
-    const [languages, setLanguages] = useState(0);
-    //------------------------------------------------------------------------------------------------------EFFECT HOOKS
+    const savedPages= localStorage.getItem("pages_"+props.service.name)
+    const savedLanguages= localStorage.getItem("languages_"+props.service.name)
+    const savedChecked = localStorage.getItem('checked_' +props.service.name);
+    const [isChecked, setIsChecked] = useState(savedChecked?JSON.parse(savedChecked):false);
+        const [languages, setLanguages] = useState(savedLanguages? JSON.parse(savedLanguages):0);
+        const [pages, setPages] = useState(savedPages? JSON.parse(savedPages):0);
+    //------------------------------------------------------------------------------------------------------REF HOOKS
     const index=useRef(props.index);
     const service=useRef(props.service);
+    //------------------------------------------------------------------------------------------------------EFFECT HOOKS
     useEffect(() => {
+        localStorage.setItem("checked_"+service.current.name,JSON.stringify(isChecked))
         if (!isChecked) {
             setPages(0);
             setLanguages(0);
@@ -25,6 +30,10 @@ export const CheckInput = (props: CheckInputProps) => {
             }
             const totalCost = service.current.cost + pages * languages * 30 ;
             props.updateAmount(totalCost, index.current);
+        }
+        if(service.current instanceof WEBService){
+            localStorage.setItem("pages_"+service.current.name,JSON.stringify(pages))
+            localStorage.setItem("languages_"+service.current.name,JSON.stringify(languages))
         }
 
     }, [pages, languages, isChecked]);
