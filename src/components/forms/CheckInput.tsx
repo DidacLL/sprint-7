@@ -28,7 +28,7 @@ export const CheckInput = (props: CheckInputProps) => {
             props.updateAmount(totalCost, props.index);
         }
 
-    }, [pages, languages, isChecked, props]);
+    }, [pages, languages, isChecked]);
     const addPages = (event: React.ChangeEvent<HTMLInputElement>) => {
         setPages(parseInt(event.target.value));
     };
