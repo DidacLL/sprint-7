@@ -1,20 +1,27 @@
 import React from 'react';
 import './App.css';
-import {Form} from "./components/forms/Form";
-import {ITService} from "./components/classes/ITService";
-import {WEBService} from "./components/classes/WEBService";
+import {BrowserRouter, Route, Routes} from "react-router-dom";
+import Layout from "./pages/Layout";
+import Home from "./pages/Home";
+import Contact from "./pages/Contact";
+import NoPage from "./pages/NoPage";
+import LandingPage from "./pages/LandingPage";
 
-const inputValues = [
-    new WEBService("WEB",500,"Una pàgina web (500€)",1,1),
-    new ITService("SEO",300,"Una consultoria SEO (300€)"),
-    new ITService("ADS",200,"Una campanya de Google Ads (200€)")
-]
+
 function App() {
-  return (
-    <div className="App">
-        <Form servicesList={inputValues}></Form>
-    </div>
-  );
+    return (
+
+        <BrowserRouter >
+            <Routes>
+                <Route path="/" element={<Layout/>}>
+                    <Route index element={<LandingPage/>}/>
+                    <Route path="home" element={<Home/>}/>
+                    <Route path="contact" element={<Contact/>}/>
+                    <Route path="*" element={<NoPage/>}/>
+                </Route>
+            </Routes>
+        </BrowserRouter>
+    );
 }
 
 export default App;
