@@ -18,13 +18,14 @@ export const Form = (props: FormParams) => {
         localStorage.setItem('prices', JSON.stringify(prices))
         localStorage.setItem('total_amount', JSON.stringify(totalAmount))
     }, [prices]);
-
     //----------------------------------------------------------------------------------------------------------HANDLERS
     const updateAmount = (value: number, index: number) => {
         let newArr = [...prices];
         newArr[index] = value;
         setPrices(newArr)
     };
+
+
     //----------------------------------------------------------------------------------------------------RETURN DISPLAY
     return <form
         style={{

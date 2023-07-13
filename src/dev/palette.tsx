@@ -1,6 +1,8 @@
 import React, {Fragment} from "react";
 import {Category, Component, Palette, Variant,} from "@react-buddy/ide-toolbox";
 import {NumberInput} from "../components/forms/NumberInput";
+import {InfoButton} from "../components/forms/InfoButton";
+import MUIPalette from "@react-buddy/palette-mui";
 
 
 export const PaletteTree = () => (
@@ -18,7 +20,13 @@ export const PaletteTree = () => (
                     <NumberInput onChange={()=>{}} text={"Label text"} minVal={0}/>
                 </Variant>
             </Component>
+            <Component name="InfoButton">
+                <Variant>
+                    <InfoButton message={"Hint to show"} title={"item title"}/>
+                </Variant>
+            </Component>
         </Category>
+        <MUIPalette/>
     </Palette>
 );
 

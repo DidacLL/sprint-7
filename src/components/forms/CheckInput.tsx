@@ -3,6 +3,7 @@ import {CheckInputProps} from "../props/CheckInputProps";
 import {StyledList} from "../styled/StyledList";
 import {NumberInput} from "./NumberInput";
 import {WEBService} from "../classes/WEBService";
+import {InfoButton} from "./InfoButton";
 
 
 export const CheckInput = (props: CheckInputProps) => {
@@ -54,7 +55,8 @@ export const CheckInput = (props: CheckInputProps) => {
                 type="checkbox"
                 checked={isChecked}
                 onChange={handleOnChange}/>
-            <label>{service.current.text}</label>
+            <label>{service.current.text} ({service.current.cost}€)</label>
+            <InfoButton title={props.service.text} message={props.service.hint}/>
         </StyledList>
         
         {isChecked && service.current instanceof WEBService ? <div style={{
@@ -65,8 +67,14 @@ export const CheckInput = (props: CheckInputProps) => {
             display: "flex",
             flexDirection: "column"
         }}>
-            <NumberInput text={"Número de páginas: "} onChange={addPages} minVal={1}/>
-            <NumberInput text={"Número de idiomas: "} onChange={addLanguages} minVal={1}/>
+            <div style={{display:"flex",flexDirection:"row"}}>
+                <NumberInput text={"Número de páginas: "} onChange={addPages} minVal={1}/>
+                <InfoButton message={"Numero de paginas que conforman el proyecto (Minimo 1)"} title={"Numero de paginas"}/>
+            </div>
+            <div style={{display:"flex",flexDirection:"row"}}>
+                <NumberInput text={"Número de idiomas: "} onChange={addLanguages} minVal={1}/>
+                <InfoButton message={"Numero de idiomas que estaran disponibles para traducir los textos en el proyecto (Minimo 1)"} title={"Numero de idiomas"}/>
+            </div>
 
         </div> : ""}
     </>;
