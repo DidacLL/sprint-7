@@ -27,6 +27,7 @@ const budget = savedData ? parseLoadedData(savedData) :
 const Home = () => {
     return <div className="App">
         <Form budget={budget}></Form>
+        {/*<BudgetList></BudgetList>*/}
     </div>
 };
 export default Home;

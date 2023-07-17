@@ -8,22 +8,26 @@ import {InfoButton} from "./InfoButton";
 
 export const CheckInput = (props: CheckInputProps) => {
     //-----------------------------------------------------------------------------------------------------LOCAL STORAGE
-    const savedPages = localStorage.getItem("pages_" + props.service.name)
-    const savedLanguages = localStorage.getItem("languages_" + props.service.name)
+    // const savedPages = localStorage.getItem("pages_" + props.service.name)
+    // const savedLanguages = localStorage.getItem("languages_" + props.service.name)
     // const savedChecked = localStorage.getItem('checked_' + props.service.name);
 
 
-    
     //-------------------------------------------------------------------------------------------------------STATE HOOKS
     const [isChecked, setIsChecked] = useState(props.service.isChecked);
-    const [languages, setLanguages] = useState(savedLanguages ? JSON.parse(savedLanguages) : 0);
-    const [pages, setPages] = useState(savedPages ? JSON.parse(savedPages) : 0);
+    const [languages, setLanguages] = useState(
+        props.service instanceof WEBService ? props.service.pages : 0
+    );
+    const [pages, setPages] = useState(
+        props.service instanceof WEBService ?
+            props.service.lang : 0
+    );
     //------------------------------------------------------------------------------------------------------REF HOOKS
     // const service = useRef(props.service);
     //------------------------------------------------------------------------------------------------------EFFECT HOOKS
     useEffect(() => {
         // localStorage.setItem("checked_" + props.service.name, JSON.stringify(isChecked))
-        props.service.isChecked=isChecked;
+        props.service.isChecked = isChecked;
         if (!isChecked) {
             setPages(0);
             setLanguages(0);
@@ -32,13 +36,16 @@ export const CheckInput = (props: CheckInputProps) => {
             if (props.service instanceof WEBService && (pages === 0 || languages === 0)) {
                 setPages(1);
                 setLanguages(1)
+                props.service.pages=pages;
+                props.service.lang=languages;
+
             }
             // const totalCost = props.service.cost + pages * languages * 30;
             props.updateAmount();
         }
         if (props.service instanceof WEBService) {
-            localStorage.setItem("pages_" + props.service.name, JSON.stringify(pages))
-            localStorage.setItem("languages_" + props.service.name, JSON.stringify(languages))
+            // localStorage.setItem("pages_" + props.service.name, JSON.stringify(pages))
+            // localStorage.setItem("languages_" + props.service.name, JSON.stringify(languages))
         }
 
     }, [pages, languages, isChecked]);
@@ -47,9 +54,11 @@ export const CheckInput = (props: CheckInputProps) => {
         setIsChecked(!isChecked);
     };
     const addPages = (val: number) => {
+        if(props.service instanceof WEBService) props.service.pages=val;
         setPages(val);
     };
     const addLanguages = (val: number) => {
+        if(props.service instanceof WEBService) props.service.lang=val;
         setLanguages(val);
     };
     //----------------------------------------------------------------------------------------------------RETURN DISPLAY
@@ -72,14 +81,14 @@ export const CheckInput = (props: CheckInputProps) => {
             flexDirection: "column"
         }}>
             <div style={{display: "flex", flexDirection: "row"}}>
-                <NumberInput text={"Número de páginas: "} onChange={addPages} minVal={1}/>
-                <InfoButton message={"Numero de paginas que conforman el proyecto (Minimo 1)"}
+                <NumberInput id={1} text={"Número de páginas: "} onChange={addPages} minVal={1}/>
+                <InfoButton message={"Numero de paginas que conforman el proyecto (Mínimo 1)"}
                             title={"Numero de paginas"}/>
             </div>
             <div style={{display: "flex", flexDirection: "row"}}>
-                <NumberInput text={"Número de idiomas: "} onChange={addLanguages} minVal={1}/>
+                <NumberInput id={2} text={"Número de idiomas: "} onChange={addLanguages} minVal={1}/>
                 <InfoButton
-                    message={"Numero de idiomas que estaran disponibles para traducir los textos en el proyecto (Minimo 1)"}
+                    message={"Numero de idiomas que estaran disponibles para traducir los textos en el proyecto (Mínimo 1)"}
                     title={"Numero de idiomas"}/>
             </div>
 

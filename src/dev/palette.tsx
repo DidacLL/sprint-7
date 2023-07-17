@@ -17,7 +17,7 @@ export const PaletteTree = () => (
         <Category name="Forms">
             <Component name="NumberInput">
                 <Variant name="buttons">
-                    <NumberInput onChange={()=>{}} text={"Label text"} minVal={0}/>
+                    <NumberInput onChange={()=>{}} text={"Label text"} minVal={0} id={0}/>
                 </Variant>
             </Component>
             <Component name="InfoButton">

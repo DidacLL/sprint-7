@@ -1,5 +1,8 @@
 import {Link, Outlet} from "react-router-dom";
 import {StyledList} from "../components/styled/StyledList";
+import {clearData} from "../utils/utils";
+
+
 
 /**
  * Provisional navBar layout
@@ -20,7 +23,14 @@ const Layout = () => {
                         <Link to="/Contact">Contacta</Link>
                     </StyledList>
                     <StyledList style={{marginLeft:"5em"}}>
-                        <button onClick={()=>localStorage.clear()} >Delete Cookies</button>
+                        <button onClick={()=>{
+                            clearData(false);
+                        }} >Reset Budget</button>
+                    </StyledList>
+                <StyledList style={{marginLeft:"5em"}}>
+                        <button onClick={()=>{
+                            clearData(true);
+                        }} >Delete All Budgets</button>
                     </StyledList>
                 </ul>
             </nav>

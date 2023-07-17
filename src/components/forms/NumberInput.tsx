@@ -3,17 +3,17 @@ import {NumberInputProps} from "../props/NumberInputProps";
 
 export const NumberInput = (props: NumberInputProps) => {
 
-    const savedVal=localStorage.getItem(props.onChange.name);
+    const savedVal=localStorage.getItem("number_input_"+props.id);
 
     //-------------------------------------------------------------------------------------------------------STATE HOOKS
 
-    const [showVal, setShowVal]= useState((savedVal)?JSON.parse(savedVal):1);
+    const [showVal, setShowVal]= useState((savedVal)?JSON.parse(savedVal):props.minVal);
 
     //------------------------------------------------------------------------------------------------------EFFECT HOOKS
 
     useEffect(() => {
         props.onChange(Math.max(showVal,1))
-        localStorage.setItem(props.onChange.name,JSON.stringify(showVal))
+        localStorage.setItem("number_input_"+props.id,JSON.stringify(showVal))
     },[showVal]);
 
     //----------------------------------------------------------------------------------------------------------HANDLERS
