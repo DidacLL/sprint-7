@@ -3,6 +3,8 @@ import {WEBService} from "../classes/WEBService";
 import {ITService} from "../classes/ITService";
 import {ITBudget} from "../classes/ITBudget";
 import {parseLoadedData} from "../utils/utils";
+import {ButtonGroup, IconButton} from "@mui/material";
+import {Delete, SaveAsRounded, Share} from "@mui/icons-material";
 
 const savedData = localStorage.getItem("current_budget")
 
@@ -25,8 +27,15 @@ const budget = savedData ? parseLoadedData(savedData) :
     ])
 
 const Home = () => {
-    return <div className="App">
-        <Form budget={budget}></Form>
+    return <div className="App" style={{display:"flex",flexFlow:"initial", backgroundColor:"cornflowerblue",minHeight:"80vh"}}>
+        <div style={{backgroundColor:"white", borderRadius:"1em",margin:"1em"}}>
+            <Form budget={budget}></Form>
+            <ButtonGroup style={{width:"100%",justifyContent:"space-around"}}>
+                <IconButton><SaveAsRounded></SaveAsRounded></IconButton>
+                <IconButton><Delete></Delete></IconButton>
+                <IconButton><Share></Share></IconButton>
+            </ButtonGroup>
+        </div>
         {/*<BudgetList></BudgetList>*/}
     </div>
 };
