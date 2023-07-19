@@ -1,14 +1,14 @@
-import {Form} from "../components/forms/Form";
 import {WEBService} from "../classes/WEBService";
 import {ITService} from "../classes/ITService";
 import {ITBudget} from "../classes/ITBudget";
-import {parseLoadedData} from "../utils/utils";
-import {ButtonGroup, IconButton} from "@mui/material";
-import {Delete, SaveAsRounded, Share} from "@mui/icons-material";
+import {parseLoadedBudget} from "../utils/utils";
+import {BudgetContainer} from "../components/BudgetContainer";
+import React from "react";
+import {BudgetList} from "../components/BudgetList";
 
 const savedData = localStorage.getItem("current_budget")
 
-const budget = savedData ? parseLoadedData(savedData) :
+const budget = savedData ? parseLoadedBudget(savedData) :
     new ITBudget([
         new WEBService("WEB",
             500,
@@ -27,16 +27,10 @@ const budget = savedData ? parseLoadedData(savedData) :
     ])
 
 const Home = () => {
-    return <div className="App" style={{display:"flex",flexFlow:"initial", backgroundColor:"cornflowerblue",minHeight:"80vh"}}>
-        <div style={{backgroundColor:"white", borderRadius:"1em",margin:"1em"}}>
-            <Form budget={budget}></Form>
-            <ButtonGroup style={{width:"100%",justifyContent:"space-around"}}>
-                <IconButton><SaveAsRounded></SaveAsRounded></IconButton>
-                <IconButton><Delete></Delete></IconButton>
-                <IconButton><Share></Share></IconButton>
-            </ButtonGroup>
-        </div>
-        {/*<BudgetList></BudgetList>*/}
+    return <div className="App"
+                style={{display: "flex", flexFlow: "wrap", backgroundColor: "cornflowerblue", minHeight: "80vh"}}>
+        <BudgetContainer initialBudget={budget}/>
+        <BudgetList></BudgetList>
     </div>
 };
 export default Home;

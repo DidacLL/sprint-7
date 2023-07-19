@@ -2,17 +2,17 @@ import {ITService} from "./ITService";
 import {WEBService} from "./WEBService";
 
 export class ITBudget {
-	constructor(itServices:ITService[],date?:Date,name?:string,clientName?:string) {
+	constructor(itServices:ITService[],name?:string,date?:Date,clientName?:string) {
 		this.services =itServices;
 		this.date=date?date:new Date();
-		this.name=name;
+		this.name=name||"NoName";
 		this.clientName=name;
 
 	}
 
 	services!: ITService[];
 	date!: Date;
-	name: string | undefined;
+	name!: string;
 	clientName:string | undefined;
 
 	totalAmount = () => {

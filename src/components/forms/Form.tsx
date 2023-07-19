@@ -36,6 +36,7 @@ export const Form = (props: FormParams) => {
                 return <CheckInput service={el} updateAmount={updateAmount}/>
             })}
         </ul>
+        {/*todo move to styled component*/}
         <div style={{display: "flex", flexDirection: "column", width: "100%", alignItems: "flex-end"}}>
             <div style={{
                 display: "flex",
