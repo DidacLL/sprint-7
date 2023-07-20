@@ -9,11 +9,11 @@ import {LicenseBar} from "../components/LicenseBar";
  */
 const Layout = () => {
     return (
-        <>
+        < div style={{height: "100%", overflow: "hidden"}}>
             <NavBar></NavBar>
             <Outlet/>
             <LicenseBar/>
-        </>
+        </div>
     )
 };
 

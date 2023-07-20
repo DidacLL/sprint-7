@@ -1,9 +1,9 @@
 export const modalStyle = {
     position: 'absolute' as 'absolute',
-    padding:"1em",
-    display:'flex',
-    flexDirection:'column',
-    textAlign:"center",
+    padding: "1em",
+    display: 'flex',
+    flexDirection: 'column',
+    textAlign: "center",
     justifyContent: 'space-between',
     top: '50%',
     left: '50%',

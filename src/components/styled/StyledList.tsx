@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 
-export const StyledList= styled.li`
+export const StyledList = styled.li`
   list-style-type:none;
   
 

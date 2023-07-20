@@ -4,7 +4,8 @@ import {ITService} from "../../classes/ITService";
 import {ITBudget} from "../../classes/ITBudget";
 
 interface FormParams {
-    budget: ITBudget;
+    budget: ITBudget,
+    updateTotal: () => void
 }
 
 export const Form = (props: FormParams) => {
@@ -16,9 +17,13 @@ export const Form = (props: FormParams) => {
         localStorage.setItem("current_budget", JSON.stringify(props.budget))
         localStorage.setItem('total_amount', JSON.stringify(totalAmount))
     }, [totalAmount]);
+    useEffect(() => {
+        setTotalAmount(props.budget.totalAmount());
+    }, [props.budget])
     //----------------------------------------------------------------------------------------------------------HANDLERS
     const updateAmount = () => {
         setTotalAmount(props.budget.totalAmount)
+        props.updateTotal();
     };
 
 
@@ -45,7 +50,7 @@ export const Form = (props: FormParams) => {
                 alignItems: "flex-start",
                 width: "40%"
             }}>
-                <label>Price:</label>   <label>{totalAmount}€</label>
+                <label>Price:</label> <label>{totalAmount}€</label>
             </div>
             <div style={{
                 display: "flex",
@@ -54,17 +59,7 @@ export const Form = (props: FormParams) => {
                 alignItems: "flex-start",
                 width: "40%"
             }}>
-                <label>Taxes(10%): </label>   <label>{totalAmount * 0.1}€</label>
-            </div>
-            <label>________________________________</label>
-            <div style={{
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "space-between",
-                alignItems: "flex-start",
-                width: "40%"
-            }}>
-                <label>Total: </label>   <label>{totalAmount * 0.1 + totalAmount}€</label>
+                <label>Taxes(10%): </label> <label>{totalAmount * 0.1}€</label>
             </div>
         </div>
 

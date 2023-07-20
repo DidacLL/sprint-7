@@ -3,6 +3,7 @@ import {Category, Component, Palette, Variant,} from "@react-buddy/ide-toolbox";
 import {NumberInput} from "../components/forms/NumberInput";
 import {InfoButton} from "../components/forms/InfoButton";
 import MUIPalette from "@react-buddy/palette-mui";
+import {WEBService} from "../classes/WEBService";
 
 
 export const PaletteTree = () => (
@@ -17,7 +18,8 @@ export const PaletteTree = () => (
         <Category name="Forms">
             <Component name="NumberInput">
                 <Variant name="buttons">
-                    <NumberInput onChange={()=>{}} text={"Label text"} minVal={0} id={0}/>
+                    <NumberInput service={new WEBService("", 0, "", 1, 1, "")} onChange={() => {
+                    }} text={"Label text"} minVal={0} id={0}/>
                 </Variant>
             </Component>
             <Component name="InfoButton">

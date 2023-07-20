@@ -1,6 +1,6 @@
 import {ITService} from "../../classes/ITService";
 
 export interface CheckInputProps {
-    service:ITService;
+    service: ITService;
     updateAmount: () => void;
 }

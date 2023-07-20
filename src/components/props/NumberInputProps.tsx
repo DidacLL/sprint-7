@@ -1,6 +1,9 @@
+import {WEBService} from "../../classes/WEBService";
+
 export interface NumberInputProps {
-    id:number;
+    service: WEBService;
+    id: number;
     text: string
     minVal: number | 1
-    onChange: (val:number) => void
+    onChange: (val: number) => void
 }

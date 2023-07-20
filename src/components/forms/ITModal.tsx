@@ -33,15 +33,15 @@ export const ITModal = (props: {
                 </Typography>
             </div>
             <div style={{
-                display:"flex",
-                flexDirection:"row",
-                justifyContent:"space-between",
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-between",
             }}>
                 {
                     props.onConfirm ?
                         <Button onClick={props.onConfirm} style={{
                             marginTop: "2em"
-                        }}>Confirm</Button>:
+                        }}>Confirm</Button> :
                         ""
                 }
                 <Button onClick={props.onClose} style={{

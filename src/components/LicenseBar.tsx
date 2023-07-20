@@ -7,7 +7,7 @@ export const LicenseBar = () => <div
         alignItems: "center",
         justifyContent: "space-between",
         overflow: "hidden",
-        maxHeight:"5vh"
+        maxHeight: "2%"
     }}>
     <h6><a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
         <img alt="Licencia de Creative Commons"
