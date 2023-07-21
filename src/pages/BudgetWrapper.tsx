@@ -33,35 +33,61 @@ export function BudgetWrapper() {
 
     //-----------------------------------------------------------------------------------------------------STATE HOOKS
     const [currentBudget, setCurrentBudget] = useState<ITBudget>(savedData ? parseLoadedBudget(savedData) : defaultBudget);
-    const [mapBudgets, setMapBudgets] = useState(savedList ? parseBudgetMap(savedList) : new Map<string, ITBudget>())
-
+    const mainMap = savedList ? parseBudgetMap(savedList) : new Map<string, ITBudget>();
+    const [shownBudgets, setShownBudgets] = useState(mainMap)
+    const [searchQuery, setSearchQuery] = useState("");
 
     function changeBudget(name: string) {
-        let obj = mapBudgets.get(name);
+        let obj = shownBudgets.get(name);
         if (obj) setCurrentBudget(obj.clone())
     }
 
     function resetCurrent() {
         setCurrentBudget(defaultBudget())
     }
+    function deleteBudged(name: string){
+        mainMap.delete(name.trim().toLowerCase());
+        setShownBudgets(mainMap);
+        // setSearchQuery("");
+        const arr = Array.from(mainMap.values());
+        localStorage.setItem("saved_budgets", JSON.stringify(arr));
+    }
 
+    useEffect(() => {
+        if (searchQuery.length>0) {
+            const keys = Array.from(mainMap.keys());
+            const selection = new Map<string, ITBudget>();
+            const regex = new RegExp(searchQuery.split('').join('.*'), 'i');
+            for (let i = 0; i < keys.length; i++) {
+                const currentKey = keys[i];
+                if (currentKey.match(regex)) {
+                    let obj = mainMap.get(currentKey);
+                    if (obj) selection.set(currentKey, obj)
+                }
+            }
+            setShownBudgets(selection);
+        }else {
+            setShownBudgets(mainMap);
+        }
+    }, [searchQuery]);
     useEffect(() => {
         localStorage.setItem("current_budget", JSON.stringify(currentBudget));
     }, [currentBudget]);
     useEffect(() => {
-        // localStorage.setItem("saved_budgets",JSON.stringify(mapBudgets.values()));
+        // localStorage.setItem("saved_budgets",JSON.stringify(shownBudgets.values()));
 
-    }, [mapBudgets]);
+    }, [shownBudgets]);
 
     function saveAs(name: string, customer: string,overwrite?:boolean) {
-        if(mapBudgets.has(name)&&!overwrite) return false;
+        const chkName=name.trim().toLowerCase();
+        if(mainMap.has(chkName)&&!overwrite) return false;
         const newBudget = currentBudget.clone(true);
         newBudget.name = name;
         newBudget.customer = customer;
-        mapBudgets.set(name, newBudget);
-        console.log(mapBudgets.get(name));
-        const arr = Array.from(mapBudgets.values());
+        mainMap.set(chkName, newBudget);
+        const arr = Array.from(mainMap.values());
         localStorage.setItem("saved_budgets", JSON.stringify(arr));
+        setShownBudgets(mainMap)
         return true;
     }
 
@@ -72,6 +98,6 @@ export function BudgetWrapper() {
         height: "80vh"
     }}>
         <BudgetEditor currentBudget={currentBudget} saveAs={saveAs} reset={resetCurrent}/>
-        <BudgetList map={mapBudgets} changeBudget={changeBudget}/>
+        <BudgetList map={shownBudgets} changeBudget={changeBudget} setSearchQuery={setSearchQuery} deleteBudget={deleteBudged}/>
     </div>;
 }

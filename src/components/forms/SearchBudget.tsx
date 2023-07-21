@@ -1,25 +1,52 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {IconButton, TextField} from "@mui/material";
-import {Search} from "@mui/icons-material";
+import {Close, Search} from "@mui/icons-material";
 
 interface SearchBudgetProps {
-	search: (value: (((prevState: string) => string) | string)) => void
+    search: (value: string) => void
 }
 
-export const SearchBudget = (props: SearchBudgetProps) => (
-	<form>
-		<TextField
-			id="search-bar"
-			onInput={(e:React.FormEvent<HTMLInputElement>) => {
-				props.search(e.currentTarget.value);
-			}}
-			label="Buscar"
-			variant="outlined"
-			placeholder="Buscar..."
-			size="small"
-		/>
-		<IconButton type="submit" aria-label="search">
-			<Search/>
-								</IconButton>
-	</form>
-);
+export const SearchBudget = (props: SearchBudgetProps) => {
+    const [searchText, setSearchText] = useState("");
+
+
+    // useEffect(() => {
+    //     setSearchText("");
+    // }, [props]);
+
+
+    useEffect(() => {
+        props.search(searchText);
+
+    }, [searchText]);
+
+
+    return <form style={{
+        display: "flex",
+        flexFlow: "nowrap"
+    }}>
+        <TextField
+            style={{
+                flexGrow: 4
+            }}
+            id="search-bar"
+            // onSubmit={(e: React.FormEvent<HTMLInputElement>) => {
+            // 	props.search(e.currentTarget.value);
+            // }}
+            onChange={(event) => setSearchText(event.target.value)}
+            label="Search "
+            value={searchText}
+            variant="outlined"
+            placeholder="name.."
+            size="small"
+        />
+        <IconButton aria-label="search" style={{
+            flexGrow: 1
+        }}
+                    onClick={() => {setSearchText("")}}
+        >
+            {searchText.length>0?<Close/>:<Search/>}
+        </IconButton>
+    </form>
+        ;
+}

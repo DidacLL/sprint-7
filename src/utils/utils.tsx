@@ -24,7 +24,7 @@ export const parseBudgetMap = (savedData: string): Map<string, ITBudget> => {
     const proto: any[] = JSON.parse(savedData);
     const map = new Map<string, ITBudget>();
     proto.forEach(current => {
-        map.set(current.name, reconstructBudget(current));
+        map.set(current.name.trim().toLowerCase(), reconstructBudget(current));
     });
     return map;
 
@@ -36,12 +36,12 @@ export function clearCurrentData(all: boolean) {
 }
 
 export function saveBudget(budget: ITBudget, map: Map<string, ITBudget>) {
-    map.set(budget.name, budget);
+    map.set(budget.name.trim().toLowerCase(), budget);
     localStorage.setItem("saved-budgets", JSON.stringify(map.values()))
 }
 
 export function deleteBudget(budgetName: string, map: Map<string, ITBudget>) {
-    map.delete(budgetName);
+    map.delete(budgetName.trim().toLowerCase());
     localStorage.setItem("saved-budgets", JSON.stringify(map.values()))
 }
 

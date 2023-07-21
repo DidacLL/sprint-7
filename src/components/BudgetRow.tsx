@@ -1,7 +1,7 @@
 import Typography from "@mui/material/Typography";
 import {Button, ButtonGroup, IconButton} from "@mui/material";
 import {ArrowRight, Delete, Share} from "@mui/icons-material";
-import React from "react";
+import React, {useEffect} from "react";
 import {ITBudget} from "../classes/ITBudget";
 import {printShortDate} from "../utils/utils";
 
@@ -9,17 +9,23 @@ import {printShortDate} from "../utils/utils";
 interface BudgetRowProps {
     budget: ITBudget,
     onSelect: (name: string) => void
+    delete: (name: string) => void
 }
 
 
-export const BudgetRow = (props: BudgetRowProps) =>
-    <div style={{
+export const BudgetRow = (props: BudgetRowProps) => {
+
+    useEffect(() => {
+
+    }, [props.budget]);
+    return <div style={{
         display: "flex",
         backgroundColor: "white",
         borderRadius: "1em",
         marginBottom: "1em",
         padding: "1em",
-        flexGrow: "1"
+        // flexGrow: "1",
+        // height:"4em"
     }}>
         <Button style={{
             display: "flex",
@@ -41,7 +47,8 @@ export const BudgetRow = (props: BudgetRowProps) =>
             </div>
         </Button>
         <ButtonGroup style={{justifyContent: "space-around"}}>
-            <IconButton><Delete></Delete></IconButton>
+            <IconButton onClick={() => props.delete(props.budget.name)}><Delete></Delete></IconButton>
             <IconButton><Share></Share></IconButton>
         </ButtonGroup>
     </div>;
+}
