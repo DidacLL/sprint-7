@@ -1,5 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {NumberInputProps} from "../props/NumberInputProps";
+import {Button} from "@mui/material";
+import {ExpandLess, ExpandMore} from "@mui/icons-material";
 
 export const NumberInput = (props: NumberInputProps) => {
 
@@ -15,12 +17,10 @@ export const NumberInput = (props: NumberInputProps) => {
 
     useEffect(() => {
         props.onChange(Math.max(showVal, props.minVal))
-        // localStorage.setItem("number_input_"+props.id,JSON.stringify(showVal))
     }, [showVal]);
     useEffect(() => {
         if (service.isChecked) setShowVal(props.id === 1 ? (service.pages || props.minVal) : (service.lang || props.minVal));
-        // return setShowVal(props.minVal)
-    }, [props.service.isChecked])
+    }, [props])
 
     //----------------------------------------------------------------------------------------------------------HANDLERS
     const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -35,23 +35,33 @@ export const NumberInput = (props: NumberInputProps) => {
 
 
     //----------------------------------------------------------------------------------------------------RETURN DISPLAY
-    return <div style={{padding: "1em"}}>
+    return <div style={{ display: "flex", flexFlow: "wrap"}}>
         <label>{props.text} </label>
-        <button
-            name="add"
-            onClick={handleClick}
-        >+
-        </button>
-        <input
-            value={showVal}
-            type="number"
-            min={1}
-            onChange={handleChange}
-        />
-        <button
-            name="sub"
-            onClick={handleClick}
-        >-
-        </button>
-    </div>;
+        <div style={{
+            flexWrap: "nowrap"
+        }}>
+            <Button
+                name="add"
+                onClick={handleClick}
+            ><ExpandLess/>
+            </Button>
+            <input
+
+                value={showVal}
+                type="number"
+                min={1}
+                onChange={handleChange}
+                style={{
+                    width:"3em",
+                    textAlign:"center"
+                }}
+            />
+            <Button
+                name="sub"
+                onClick={handleClick}
+            ><ExpandMore/>
+            </Button>
+        </div>
+    </div>
+        ;
 };

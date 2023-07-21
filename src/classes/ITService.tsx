@@ -13,7 +13,12 @@ export class ITService {
         this.isChecked = isChecked || false;
 
     }
-
-
+    public equals:(service: ITService) => boolean = (service: ITService)=>{
+        return this.hint===service.hint &&
+            this.isChecked===service.isChecked &&
+            this.name===service.name &&
+            this.text===service.text &&
+            this.cost===service.cost;
+    }
 }
 

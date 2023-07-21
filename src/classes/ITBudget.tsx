@@ -3,7 +3,7 @@ import {WEBService} from "./WEBService";
 
 export class ITBudget {
     services!: ITService[];
-    date!: Date;
+    date: Date;
     name!: string;
     customer: string | undefined;
 
@@ -25,7 +25,7 @@ export class ITBudget {
     };
 
 
-    clone = (): ITBudget => {
+    clone = (newDate?:boolean): ITBudget => {
         const newServ: ITService[] = [];
         for (let i = 0; i < this.services.length; i++) {
             const current = this.services[i];
@@ -33,7 +33,14 @@ export class ITBudget {
                 new WEBService(current.name, current.cost, current.text, current.pages, current.lang, current.hint, current.isChecked)
                 : new ITService(current.name, current.cost, current.text, current.hint, current.isChecked))
         }
-        return new ITBudget(newServ, this.name, this.date, this.customer)
+        return new ITBudget(newServ, this.name, newDate?new Date():this.date, this.customer)
+    }
+    equals=(budget : ITBudget):boolean=>{
+        let eq=true;
+        for (let i = 0; i < budget.services.length; i++) {
+            eq=eq&&this.services[i].equals(budget.services[i])
+        }
+        return eq && this.name===budget.name && this.customer===budget.customer;
     }
 }
 

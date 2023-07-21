@@ -38,12 +38,11 @@ export function BudgetWrapper() {
 
     function changeBudget(name: string) {
         let obj = mapBudgets.get(name);
-        if (obj) setCurrentBudget(obj)
+        if (obj) setCurrentBudget(obj.clone())
     }
 
     function resetCurrent() {
-        console.log("RESET2")
-        setCurrentBudget(defaultBudget)
+        setCurrentBudget(defaultBudget())
     }
 
     useEffect(() => {
@@ -54,17 +53,24 @@ export function BudgetWrapper() {
 
     }, [mapBudgets]);
 
-    function saveAs(name: string, customer: string) {
-        const newBudget = currentBudget.clone();
+    function saveAs(name: string, customer: string,overwrite?:boolean) {
+        if(mapBudgets.has(name)&&!overwrite) return false;
+        const newBudget = currentBudget.clone(true);
         newBudget.name = name;
         newBudget.customer = customer;
         mapBudgets.set(name, newBudget);
         console.log(mapBudgets.get(name));
         const arr = Array.from(mapBudgets.values());
         localStorage.setItem("saved_budgets", JSON.stringify(arr));
+        return true;
     }
 
-    return <div style={{display: "flex", flexFlow: "wrap", backgroundColor: "cornflowerblue", height: "80%"}}>
+    return <div style={{
+        display: "flex",
+        flexFlow: "wrap",
+        backgroundColor: "cornflowerblue",
+        height: "80vh"
+    }}>
         <BudgetEditor currentBudget={currentBudget} saveAs={saveAs} reset={resetCurrent}/>
         <BudgetList map={mapBudgets} changeBudget={changeBudget}/>
     </div>;

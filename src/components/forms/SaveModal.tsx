@@ -4,20 +4,27 @@ import Fade from "@mui/material/Fade";
 import Box from "@mui/material/Box";
 import {modalStyle} from "../styled/ModalStyle";
 import Typography from "@mui/material/Typography";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Button} from "@mui/material";
 
 interface SaveModalParams {
-    open: boolean;
-    onClose: () => void;
-    onSubmit: (name: string, clientName: string) => void
+    open: boolean,
+    onClose: () => void,
+    onSubmit: (name: string, clientName: string,overwrite?:boolean) => void,
+    values: any[]
 }
 
 export const SaveModal = (props: SaveModalParams) => {
 
 
-    const [name, setName] = useState("");
-    const [customerName, setCustomerName] = useState("");
+    const [name, setName] = useState(props.values[0]&&props.values[0]!=="NoName"?props.values[0]:"");
+    const [customerName, setCustomerName] = useState(props.values[1]?props.values[1]:"");
+
+
+    useEffect(() => {
+        setName(props.values[0]&&props.values[0]!=="NoName"?props.values[0]:"");
+        setCustomerName(props.values[1]?props.values[1]:"");
+    }, [props.values]);
     return (<Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
@@ -47,9 +54,10 @@ export const SaveModal = (props: SaveModalParams) => {
                     justifyContent: "space-between",
                     margin: "1em"
                 }}>
-                    <label>Name:</label> <input
+                    <label>* Name:</label> <input
                     value={name}
-                    type="text" onChange={(event) => setName(event.currentTarget.value)}/>
+                    type="text"
+                    onChange={(event) => setName(event.currentTarget.value)}/>
                 </div>
                 <div style={{
                     display: "flex",
@@ -68,7 +76,7 @@ export const SaveModal = (props: SaveModalParams) => {
                     flexDirection: "row",
                     justifyContent: "space-between",
                 }}>
-                    <Button onClick={() => props.onSubmit(name, customerName)} style={{
+                    <Button disabled={name===""} onClick={() => props.onSubmit(name, customerName,false)} style={{
                         marginTop: "2em"
                     }}>Confirm</Button>
 

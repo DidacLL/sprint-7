@@ -31,7 +31,9 @@ export const Form = (props: FormParams) => {
     return <form
         style={{
             textAlign: "left",
-            padding: "5em"
+            height:"100%"
+            // padding: "1em",
+
         }}>
         <label>
             Select desired services:
